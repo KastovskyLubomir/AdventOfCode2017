@@ -1,0 +1,5 @@
+version: "Apple Swift version 4.0.2 (swiftlang-900.0.69.2 clang-900.0.38)"
+options: "de9936c1f27e51addd38267035e9393c"
+build_time: [1512553559, 962883000]
+inputs:
+  "/Users/kastovskyl/Dropbox/AdventOfCode/event006/event006/main.swift": [1512553558, 0]
