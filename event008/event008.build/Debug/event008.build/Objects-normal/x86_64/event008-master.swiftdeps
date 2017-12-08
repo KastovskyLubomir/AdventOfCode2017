@@ -1,5 +1,0 @@
-version: "Apple Swift version 4.0 (swiftlang-900.0.65 clang-900.0.37)"
-options: "bad881b16e58b90dd8cb16cc4e03677c"
-build_time: [1512755652, 954823000]
-inputs:
-  "/Users/lubomirkastovsky/Dropbox/AdventOfCode/event008/event008/main.swift": [1512755652, 0]

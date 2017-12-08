@@ -5,13 +5,13 @@
 	<key>BuildLocationStyle</key>
 	<string>CustomLocation</string>
 	<key>CustomBuildIntermediatesPath</key>
-	<string>/Users/lubomirkastovsky/Dropbox/AdventOfCode/event008</string>
+	<string>/Users/lubomirkastovsky/AdventOfCode2017/event008</string>
 	<key>CustomBuildLocationType</key>
 	<string>Absolute</string>
 	<key>CustomBuildProductsPath</key>
-	<string>/Users/lubomirkastovsky/Dropbox/AdventOfCode/event008</string>
+	<string>/Users/lubomirkastovsky/AdventOfCode2017/event008</string>
 	<key>CustomIndexStorePath</key>
-	<string>/Users/lubomirkastovsky/Dropbox/AdventOfCode/event008</string>
+	<string>/Users/lubomirkastovsky/AdventOfCode2017/event008</string>
 	<key>DerivedDataLocationStyle</key>
 	<string>Default</string>
 	<key>EnabledFullIndexStoreVisibility</key>
