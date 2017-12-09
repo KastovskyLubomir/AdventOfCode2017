@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildLocationStyle</key>
-	<string>CustomLocation</string>
+	<string>UseTargetSettings</string>
 	<key>CustomBuildIntermediatesPath</key>
 	<string>/Users/lubomirkastovsky/AdventOfCode2017/event008</string>
 	<key>CustomBuildLocationType</key>
