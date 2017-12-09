@@ -47,7 +47,7 @@ let input = ""
 let fileManager = FileManager.default
 
 let fileDir: String = fileManager.currentDirectoryPath
-let filePath: String = fileDir.appending("/input.file")
+let filePath: String = fileDir.appending("/../input.file")
 let data = fileManager.contents(atPath: filePath)
 
 let str: String = String(data: data!, encoding: String.Encoding.utf8)!
@@ -57,7 +57,7 @@ let linesArr = str.components(separatedBy: "\n")
 
 var sum2: Int64 = 0
 for line in linesArr {
-    print("line: >" + line + "<")
+    //print("line: >" + line + "<")
     // find max and min
     
     if !line.isEmpty {
@@ -69,7 +69,7 @@ for line in linesArr {
             for second in wordsArr {
                 if ((first == second) && (firstIndex != secondIndex)) {
                     //if ((a % b) == 0) {
-                    print("first: " + first + ", second: " + second + ", has same")
+                    //print("first: " + first + ", second: " + second + ", has same")
                     //    sum2 = sum2 + (a/b)
                     //}
                     
@@ -80,7 +80,7 @@ for line in linesArr {
             }
             firstIndex += 1
         }
-        print("\n")
+        //print("\n")
         if lineValid {
             sum2 += 1
         }
@@ -111,7 +111,7 @@ print(areAnagrams(first: "abcde", second: "edbca"))
 
 var sum3: Int64 = 0
 for line in linesArr {
-    print("line: >" + line + "<")
+    //print("line: >" + line + "<")
     // find max and min
     
     if !line.isEmpty {
@@ -121,8 +121,8 @@ for line in linesArr {
         for first in wordsArr {
             var secondIndex = 0
             for second in wordsArr {
-                if ((first == second) && (firstIndex != secondIndex)) {
-                    print("first: " + first + ", second: " + second + ", has same")
+                if (areAnagrams(first: first, second: second) && (firstIndex != secondIndex)) {
+                    //print("first: " + first + ", second: " + second + ", has same")
                     //not valid line
                     lineValid = false
                 }
@@ -130,11 +130,11 @@ for line in linesArr {
             }
             firstIndex += 1
         }
-        print("\n")
+        //print("\n")
         if lineValid {
             sum3 += 1
         }
     }
 }
 
-
+print(sum3)
