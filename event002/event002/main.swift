@@ -57,7 +57,7 @@ import Foundation
 let fileManager = FileManager.default
 
 let fileDir: String = fileManager.currentDirectoryPath
-let filePath: String = fileDir.appending("/input.file")
+let filePath: String = fileDir.appending("/../input.file")
 let data = fileManager.contents(atPath: filePath)
 
 let str: String = String(data: data!, encoding: String.Encoding.utf8)!
