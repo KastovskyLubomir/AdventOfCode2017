@@ -241,6 +241,7 @@
 				DEVELOPMENT_TEAM = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
+				SYMROOT = "$(PROJECT_DIR)";
 			};
 			name = Debug;
 		};
@@ -252,6 +253,7 @@
 				DEVELOPMENT_TEAM = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
+				SYMROOT = "$(PROJECT_DIR)";
 			};
 			name = Release;
 		};

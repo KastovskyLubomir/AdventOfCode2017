@@ -49,7 +49,7 @@ import Foundation
 
 let input = "14 0 15 12 11 11 3 5 1 6 8 4 9 1 8 4"
 let input1 = "0 2 7 0"
-let numStr = input1.components(separatedBy: " ")
+let numStr = input.components(separatedBy: " ")
 var numArr = [Int]()
 
 // convert to numbers
@@ -125,7 +125,7 @@ var firstM: Int = 0
 while (!foundSame) {
 	steps += 1
 	firstM = firstMax(array: numArr)
-	print(numArr)
+	//print(numArr)
 	numArr = distribute(array: numArr, index: firstM)
 	if(findSameArray(arrayOfArrays: matrix, array: numArr)) {
 		let sameIndex = sameArrayIndex(arrayOfArrays: matrix, array: numArr)

@@ -204,7 +204,7 @@ func insertLeafs(array:Array<Node>, node:Node) -> Node {
 let fileManager = FileManager.default
 
 let fileDir: String = fileManager.currentDirectoryPath
-let filePath: String = fileDir.appending("/../../../input.txt")
+let filePath: String = fileDir.appending("/../input.txt")
 let data = fileManager.contents(atPath: filePath)
 
 let str: String = String(data: data!, encoding: String.Encoding.utf8)!
