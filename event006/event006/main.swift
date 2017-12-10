@@ -60,13 +60,8 @@ for a in numStr {
 print(numArr)
 
 func firstMax(array: Array<Int>) -> Int {
-	var index: Int = 0
-	for a in array {
-		if (a > array[index]) {
-			index = array.index(of: a)!
-		}
-	}
-	return index
+    let maxIndex = array.index(of:(array.max()!))
+    return Int(maxIndex!)
 }
 
 print(firstMax(array: numArr))
@@ -76,6 +71,13 @@ func distribute(array: Array<Int>, index: Int) -> Array<Int> {
 	var i = index
 	var blocks = arr[i];
 	arr[i] = 0;
+    
+    let increment = (blocks / array.count)
+    if(increment > 0) {
+        arr = arr.map{$0+increment}
+        blocks = blocks % array.count
+    }
+    
 	while (blocks > 0) {
 		i += 1
 		if(i>=array.count) {
@@ -87,30 +89,18 @@ func distribute(array: Array<Int>, index: Int) -> Array<Int> {
 	return arr
 }
 
-func arraysSame(array1:Array<Int>, array2:Array<Int>) -> Bool {
-	var index = 0
-	for a in array1 {
-		if (a != array2[index]) {
-			break;
-		}
-		index += 1
-	}
-	return (index == array1.count)
-}
-
-func findSameArray(arrayOfArrays: Array<Array<Int>>, array: Array<Int>) -> Bool {
-	for arr in arrayOfArrays {
-		if (arraysSame(array1: array, array2: arr)) {
-			return true
-		}
-	}
-	return false
+func numberArrayToString(array: Array<Int>) -> String {
+    var str = ""
+    for i in array {
+        str += String(i)
+    }
+    return str
 }
 
 func sameArrayIndex(arrayOfArrays: Array<Array<Int>>, array: Array<Int>) -> Int {
 	var index = 0
 	for arr in arrayOfArrays {
-		if (arraysSame(array1: array, array2: arr)) {
+		if (array == arr) {
 			return index
 		}
 		index += 1
@@ -118,24 +108,36 @@ func sameArrayIndex(arrayOfArrays: Array<Array<Int>>, array: Array<Int>) -> Int 
 	return -1
 }
 
+
 var steps: Int = 0
 var foundSame: Bool = false
-var matrix = [[Int]]()
+var matrix: Dictionary = [String:Int]()
 var firstM: Int = 0
+
+let start = DispatchTime.now() // <<<<<<<<<< Start time
+
+var strArr = ""
+var index = 0
 while (!foundSame) {
-	steps += 1
-	firstM = firstMax(array: numArr)
-	//print(numArr)
-	numArr = distribute(array: numArr, index: firstM)
-	if(findSameArray(arrayOfArrays: matrix, array: numArr)) {
-		let sameIndex = sameArrayIndex(arrayOfArrays: matrix, array: numArr)
-		print("same state cycles: " + String(matrix.count - sameIndex))
-		break;
-	}
-	else {
-		matrix.append(numArr)
-	}
+    steps += 1
+    firstM = firstMax(array: numArr)
+    numArr = distribute(array: numArr, index: firstM)
+    strArr = numberArrayToString(array: numArr)
+    if(matrix[strArr] != nil) {
+        let sameIndex = matrix[strArr]
+        print("same state cycles: " + String(index - sameIndex!))
+        break;
+    }
+    else {
+        matrix[strArr] = index
+    }
+    index += 1
 }
+
+let end = DispatchTime.now()   // <<<<<<<<<<   end time
+let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
+let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
+print("Time to evaluate problem : \(timeInterval) seconds")
 
 print(steps)
 

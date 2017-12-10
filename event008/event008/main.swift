@@ -40,25 +40,30 @@
 
 import Foundation
 
-let fileManager = FileManager.default
+func readLinesRemoveEmpty(str: String) -> Array<String> {
+    var x = str.components(separatedBy: ["\n"])
+    for i in x.indices {
+        if x[i].isEmpty {
+            x.remove(at: i)
+        }
+    }
+    return x
+}
 
+let fileManager = FileManager.default
 let fileDir: String = fileManager.currentDirectoryPath
 let filePath: String = fileDir.appending("/../input.txt")
 let data = fileManager.contents(atPath: filePath)
-
 let str: String = String(data: data!, encoding: String.Encoding.utf8)!
-
-// iterate through lines
-let linesArr = str.components(separatedBy: "\n")
+let linesArr = readLinesRemoveEmpty(str: str)
 
 var registers : Dictionary = [String : Int] ()
 
+// iterate through lines and create registers
 for line in linesArr {
-    if !line.isEmpty {
-        let lineArgs = line.components(separatedBy: " ")
-        print(lineArgs)
-        registers[lineArgs[0]] = 0
-    }
+    let lineArgs = line.components(separatedBy: " ")
+    print(lineArgs)
+    registers[lineArgs[0]] = 0
 }
 
 func operationOnReg(reg: String, op: String, value: Int) {
