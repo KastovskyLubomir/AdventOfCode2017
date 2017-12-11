@@ -49,6 +49,37 @@ let str: String = String(data: data!, encoding: String.Encoding.utf8)!
 // cut off last character, usualy "\n"
 //let inStr = str[...str.index(before:str.index(before: str.endIndex))]
 let inStr = str.dropLast()
+var strArr = inStr.components(separatedBy: [","])
 
-var lenArr = stringNumArrayToArrayOfInt(input: String(inStr), separators: [","])
+func getDistance(array: Array<String>) -> Int {
+    
+    let counts = array.reduce(into: [:]) { counts, word in counts[word, default: 0] += 1 }
+    print(counts)
+    let x = (counts["s"]! - counts["n"]!)
+    let y = (counts["ne"]! - counts["sw"]!)
+    let z = (counts["se"]! - counts["nw"]!)
+    print(x)
+    print(y)
+    print(z)
+    return (z+x+(y-x))
+}
+
+func biggestDistance(array: Array<String>) -> Int {
+    var dict = ["n":0, "s":0, "ne":0, "sw":0, "nw":0, "se":0]
+    for s in array {
+        
+    }
+    return 0
+}
+
+
+print(getDistance(array: strArr))
+
+
+
+
+
+
+
+
 
