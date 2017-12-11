@@ -55,20 +55,46 @@ func getDistance(array: Array<String>) -> Int {
     
     let counts = array.reduce(into: [:]) { counts, word in counts[word, default: 0] += 1 }
     print(counts)
-    let x = (counts["s"]! - counts["n"]!)
-    let y = (counts["ne"]! - counts["sw"]!)
-    let z = (counts["se"]! - counts["nw"]!)
+    var x = 0 //(counts["s"]! - counts["n"]!)
+    var y = 0 //(counts["ne"]! - counts["sw"]!)
+    var z = 0 //(counts["se"]! - counts["nw"]!)
+    
+    if(counts["s"]! > counts["n"]!) {
+        x = (counts["s"]! - counts["n"]!)
+    }
+    else {
+        x = (counts["n"]! - counts["s"]!)
+    }
+    
+    if(counts["ne"]! > counts["sw"]!) {
+        y = (counts["ne"]! - counts["sw"]!)
+    }
+    else {
+        y = (counts["sw"]! - counts["ne"]!)
+    }
+    
+    if(counts["se"]! > counts["nw"]!) {
+        z = (counts["se"]! - counts["nw"]!)
+    }
+    else {
+        z = (counts["nw"]! - counts["se"]!)
+    }
+    
     print(x)
     print(y)
     print(z)
+    
+    if(counts["se"]!+counts["ne"]!) > (counts["sw"]!+counts["nw"]!) {
+        if counts["s"]! > counts["n"]! {
+            return ()
+        }
+    }
+    
     return (z+x+(y-x))
 }
 
 func biggestDistance(array: Array<String>) -> Int {
-    var dict = ["n":0, "s":0, "ne":0, "sw":0, "nw":0, "se":0]
-    for s in array {
-        
-    }
+    for i in
     return 0
 }
 
