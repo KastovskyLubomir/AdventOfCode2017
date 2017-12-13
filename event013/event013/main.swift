@@ -327,8 +327,9 @@ func tripSeverity(scanner: Dictionary<Int, Int>) -> Int {
 }
 
 func smallestDelay(scanner: Dictionary<Int, Int>, maxDelay: Int) -> Int {
-	var caught = false
-	for delay in stride(from: 0, to: 10000000, by: 2) {
+	var delay = 0
+	while delay <= maxDelay {
+		var caught = false
 		for key in scanner.keys {
 			if((key+delay) % ((scanner[key]!-1)*2)) == 0 {
 				caught = true;
@@ -338,7 +339,7 @@ func smallestDelay(scanner: Dictionary<Int, Int>, maxDelay: Int) -> Int {
 		if !caught {
 			return delay
 		}
-		caught = false
+		delay += 2
 	}
 	return 0
 }
