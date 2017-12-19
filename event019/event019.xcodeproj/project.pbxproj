@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		ACABBAD01FE9068E00054461 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACABBACF1FE9068E00054461 /* main.swift */; };
+		ACABBAD81FE9411100054461 /* libncurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABBAD71FE9411100054461 /* libncurses.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		ACABBACC1FE9068E00054461 /* event019 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = event019; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACABBACF1FE9068E00054461 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		ACABBAD71FE9411100054461 /* libncurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libncurses.tbd; path = usr/lib/libncurses.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACABBAD81FE9411100054461 /* libncurses.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +46,7 @@
 			children = (
 				ACABBACE1FE9068E00054461 /* event019 */,
 				ACABBACD1FE9068E00054461 /* Products */,
+				ACABBAD61FE9411100054461 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +64,14 @@
 				ACABBACF1FE9068E00054461 /* main.swift */,
 			);
 			path = event019;
+			sourceTree = "<group>";
+		};
+		ACABBAD61FE9411100054461 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ACABBAD71FE9411100054461 /* libncurses.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

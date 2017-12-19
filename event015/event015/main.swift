@@ -104,9 +104,6 @@ Your puzzle answer was 336.
 
 import Foundation
 
-func generator1()
-
-
 let factorA: UInt64 = 16807
 let factorB: UInt64 = 48271
 let modAB: UInt64 = 2147483647

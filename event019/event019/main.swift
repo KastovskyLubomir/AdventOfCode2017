@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Darwin.ncurses
 
 func readLinesRemoveEmpty(str: String) -> Array<String> {
 	var x = str.components(separatedBy: ["\n"])
@@ -48,9 +49,12 @@ for line in inputLines {
 	let lineArgs = Array(line[line.startIndex..<line.endIndex])
 	inputMatrix.append(lineArgs)
 }
+
+/*
 for row in inputMatrix {
 	print(row)
 }
+*/
 
 enum Direction {
 	case UP
@@ -93,7 +97,7 @@ func findCoordinatesLeftRight(matrix: Array<Array<Character>>, row: Int, col: In
 }
 
 func moveToNext(ch: Character, direction: Direction, matrix: Array<Array<Character>>, row: Int, col: Int) -> (row: Int, col: Int, direction: Direction) {
-	if ch == "|"  || isLetter(ch: ch) {
+	if ch == "|"  || isLetter(ch: ch) || ch == "@" {
 		if (direction == Direction.DOWN) {
 			if row < (matrix.count - 1) {
 				return (row: row+1, col: col, Direction.DOWN)
@@ -111,7 +115,7 @@ func moveToNext(ch: Character, direction: Direction, matrix: Array<Array<Charact
 			return (row: row, col: col+1, Direction.RIGHT)
 		}
 	}
-	if ch == "-" || isLetter(ch: ch){
+	if ch == "-" || isLetter(ch: ch) || ch == "@" {
 		if direction == Direction.RIGHT {
 			if col < (matrix[row].count - 1) {
 				return (row: row, col: col+1, Direction.RIGHT)
@@ -140,7 +144,75 @@ func moveToNext(ch: Character, direction: Direction, matrix: Array<Array<Charact
 	return (0,0,Direction.ERROR)
 }
 
-func traverseMatrix(matrix: Array<Array<Character>>) -> (str: String, steps: Int) {
+func showMatrixPart(matrix:Array<Array<Character>>, row: Int, col: Int, sideRow: Int, sideCol: Int) {
+	move(0, 0)
+	var r = 0
+	var c = 0
+	var maxR = matrix.count - 1
+	var maxC = matrix[0].count - 1
+
+	if (row - (sideRow/2)) < 0 {
+		maxR = sideRow
+	}
+	else {
+		if (row + (sideRow/2)) >= maxR {
+			r = maxR - sideRow
+		}
+		else {
+			r = (row - (sideRow/2))
+			maxR = (row + (sideRow/2))
+		}
+	}
+
+	if (col - (sideCol/2)) < 0 {
+		maxC = sideCol
+	}
+	else {
+		if (col + (sideCol/2)) >= maxC {
+			c = maxC - sideCol
+		}
+		else {
+			c = (col - (sideCol/2))
+			maxC = (col + (sideCol/2))
+		}
+	}
+
+	for y in r..<maxR {
+		for x in c..<maxC {
+			if (x==col) && (y==row) {
+				attron(COLOR_PAIR(1))
+				let ch: UInt32 = UInt32(Array(String(matrix[y][x]).utf8)[0])
+				mvaddch(Int32(y-r),Int32(x-c),UInt32(ch))
+				attroff(COLOR_PAIR(1))
+			}
+			else {
+				if isLetter(ch: matrix[y][x]) {
+					attron(COLOR_PAIR(2))
+					let ch: UInt32 = UInt32(Array(String(matrix[y][x]).utf8)[0])
+					mvaddch(Int32(y-r),Int32(x-c),UInt32(ch))
+					attroff(COLOR_PAIR(2))
+				}
+				else {
+					let ch: UInt32 = UInt32(Array(String(matrix[y][x]).utf8)[0])
+					mvaddch(Int32(y-r),Int32(x-c),UInt32(ch))
+				}
+			}
+		}
+	}
+}
+
+func showStatus(foundCharacters: String, steps: Int, line: Int32) {
+	move(line,0)
+	let str = "Collected letters: " + foundCharacters
+	addstr(str)
+	move(line+1,0)
+	let str2 = "Steps: " + String(steps)
+	addstr(str2)
+
+}
+
+func traverseMatrix(inputMatrix: Array<Array<Character>>, animate: Bool) -> (str: String, steps: Int) {
+	var matrix = inputMatrix
 	var result = ""
 	var indexRow = 0
 	// find start
@@ -149,7 +221,17 @@ func traverseMatrix(matrix: Array<Array<Character>>) -> (str: String, steps: Int
 	var steps = 0
 
 	while true {
+		if animate {
+			showMatrixPart(matrix: matrix, row: indexRow, col: indexCol, sideRow: 50, sideCol: 100)
+			showStatus(foundCharacters: result, steps: steps, line: 51)
+			refresh()
+			usleep(5000)
+			if isLetter(ch: matrix[indexRow][indexCol]) {
+				sleep(3)
+			}
+		}
 		let res = moveToNext(ch: matrix[indexRow][indexCol], direction: direction, matrix: matrix, row: indexRow, col: indexCol)
+		matrix[indexRow][indexCol] = "@"
 		indexRow = res.row
 		indexCol = res.col
 		direction = res.direction
@@ -165,5 +247,20 @@ func traverseMatrix(matrix: Array<Array<Character>>) -> (str: String, steps: Int
 	return (result, steps)
 }
 
-let result = traverseMatrix(matrix: inputMatrix)
+
+initscr()                   // Init window. Must be first
+cbreak()
+noecho()                    // Don't echo user input
+nonl()                      // Disable newline mode
+intrflush(stdscr, true)     // Prevent flush
+keypad(stdscr, true)        // Enable function and arrow keys
+curs_set(1)                 // Set cursor to invisible
+move(0, 0)
+refresh()
+start_color()
+init_pair(1, Int16(COLOR_BLUE), Int16(COLOR_YELLOW));
+init_pair(2, Int16(COLOR_RED), Int16(COLOR_WHITE));
+let result = traverseMatrix(inputMatrix: inputMatrix, animate: true)
+endwin()
 print(result)
+
