@@ -15,12 +15,12 @@
  
  Sometimes, the lines cross over each other; in these cases, it needs to continue going the same direction, and only turn left or right when there's no other option. In addition, someone has left letters on the line; these also don't change its direction, but it can use them to keep track of where it's been. For example:
  
- |
- |  +--+
- A  |  C
+     |
+     |  +--+
+     A  |  C
  F---|----E|--+
- |  |  |  D
- +B-+  +--+
+     |  |  |  D
+     +B-+  +--+
  
  Given this diagram, the packet needs to take the following path:
  
@@ -40,12 +40,12 @@
  
  For example, using the same routing diagram from the example above...
  
- |
- |  +--+
- A  |  C
+     |
+     |  +--+
+     A  |  C
  F---|--|-E---+
- |  |  |  D
- +B-+  +--+
+     |  |  |  D
+     +B-+  +--+
  
  ...the packet would go:
  
