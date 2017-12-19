@@ -71,3 +71,5 @@ fastlane/test_output
 .DS_Store
 *dgph
 *dgph~
+*/Objects-normal/*
+
