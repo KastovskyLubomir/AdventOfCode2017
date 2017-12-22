@@ -230,8 +230,8 @@ let side = 10*1000+1
 //let side = 25
 var grid = [[UInt8]]()
 
+let a = [UInt8](repeatElement(0, count: side))
 for _ in 0..<side {
-    let a = [UInt8](repeatElement(0, count: side))
     grid.append(a)
 }
 
