@@ -152,44 +152,50 @@ processInstructions(program: inputMatrix, registers: registers)
 // input code rewritten in swift + neccessary optimalization
 // the search for d*e==b must be optimalized otherwise it will do the multiplication square(b-1) times
 
-//var b = 65
-//var c = 65
-var b = 106500
-var c = 123500
-var f = 0
-var d = 0
-var h = 0
-var e = 0
+func runRewrittenProgram(regA: Int, regB: Int) {
+    var mult = 0
+    
+    let a = regA
+    var b = 0
+    var c = 0
+    var d = 0
+    var e = 0
+    var f = 0
+    var h = 0
 
-var mult = 0
-
-repeat {
-    //print(b)
-    f = 1
-    d = 2
-    repeat {
-        e = 2
-        repeat {
-            mult += 1
-            if (d*e) == b {
-                f = 0
-            }
-            e = e+1
-        } while (e != b) && (f != 0) && ((d*e)<=b)  // added optimalization here +"&& (f != 0) && ((d*e)<=b)"
-        d = d + 1
-    } while (d != b) && (f != 0)    // added optimalization here +"&& (f != 0)"
-    if f == 0 {
-        h = h+1
+    b = regB
+    c = b
+    if a != 0 {
+        b = b*100 + 100000
+        c = b + 17000
     }
-    if b==c { break }
-    b += 17
-} while true
+    repeat {
+        //print(b)
+        f = 1
+        d = 2
+        repeat {
+            e = 2
+            repeat {
+                mult += 1
+                if (d*e) == b {
+                    f = 0
+                }
+                e = e+1
+            } while (e != b) && (f != 0) && ((d*e)<=b)  // added optimalization here +"&& (f != 0) && ((d*e)<=b)"
+            d = d + 1
+        } while (d != b) && (f != 0)    // added optimalization here +"&& (f != 0)"
+        if f == 0 {
+            h = h+1
+        }
+        if b==c { break }
+        b += 17
+    } while true
+
+    print("Register h: " + String(h))
+    print("Multiplication count: " + String(mult))
+}
 
 
-print("Register h: " + String(h))
-print("Multiplication count: " + String(mult))
-
-
-
+runRewrittenProgram(regA: 1, regB: 65)
 
 
