@@ -123,7 +123,7 @@ struct Particle: Equatable {
 }
 
 func particleToString(p: Particle) ->String {
-	return String(p.p[0]) + "," + String(p.p[1]) + "," + String(p.p[0])
+	return String(p.p[0]) + "," + String(p.p[1]) + "," + String(p.p[2])
 }
 
 func parseInput(lines:Array<String>) -> Array<Particle> {
@@ -153,12 +153,11 @@ func particleUpdate(p: Particle) -> Particle {
 /*--- Part 1 */
 
 var vectorData = parseInput(lines: inputLines)
-var tick = 0
-
-/*
 var smallestDistanceIndex = 0
 var smallestDistance = Int64.max
-while tick < 10000 {
+var tickLastchange = 0
+var lastIndex = 0
+while true {
 	smallestDistance = Int64.max
 	for i in 0..<vectorData.count {
 		if vectorData[i].dist < smallestDistance {
@@ -166,27 +165,32 @@ while tick < 10000 {
 			smallestDistance = vectorData[i].dist
 		}
 	}
+    if smallestDistanceIndex == lastIndex {
+        tickLastchange += 1
+    }
+    else {
+        lastIndex = smallestDistanceIndex
+        tickLastchange = 0
+    }
+    if tickLastchange > 1000 {
+        break
+    }
 	for i in 0..<vectorData.count {
 		vectorData[i] = particleUpdate(p: vectorData[i])
 	}
-	tick += 1
+	
 }
 
-print("Smallest distance:" + String(smallestDistance))
 print("Smallest distance index:" + String(smallestDistanceIndex))
-*/
+
 
 /*--- Part 2 */
 
 func removeParticle(p: Particle, vectorData: Array<Particle>) -> Array<Particle> {
-	var data = vectorData
-	var i = 0
-	while i < data.count {
-		if(p.str == data[i].str) {
-			data.remove(at: i)
-		}
-		else {
-			i += 1
+	var data = [Particle]()
+	for x in vectorData {
+		if(p.str != x.str) {
+            data.append(x)
 		}
 	}
 	return data
@@ -194,52 +198,37 @@ func removeParticle(p: Particle, vectorData: Array<Particle>) -> Array<Particle>
 
 func removeColidingParticles(input: Array<Particle>) -> Array<Particle> {
 	var vectorData = [Particle]()
-	/*
-	var i = 0
-	var j = 0
-	while i < vectorData.count {
-		j = 0
-		while j < vectorData.count {
-			if i != j {
-				if vectorData[i][0] == vectorData[j][0] {
-					vectorData = removeParticle(p: vectorData[i][0], vectorData: vectorData)
-					i = 0
-					break
-				}
-			}
-			j += 1
-		}
-		i += 1
-	}*/
-
-	var counts: [String: Int] = [:]
+    var counts: [String: Int] = [:]
+    
 	input.forEach { counts[$0.str, default: 0] += 1 }
-	var debug = [String:Int]()
 	for x in input {
 		if counts[x.str] == 1 {
 			vectorData.append(x)
 		}
-		else {
-			debug[x.str] = counts[x.str]
-		}
 	}
-    let sum = debug.reduce(0, combine: +)
-    print("Removed: " + debug.description + " Sum: " + sum)
+ 
 	return vectorData
 }
 
 vectorData = parseInput(lines: inputLines)
-tick = 0
-while tick < 10000 {
-	vectorData = removeColidingParticles(input: vectorData)
+var lastSize = 0
+var tickNoChange = 0
+while true {
+    vectorData = removeColidingParticles(input: vectorData)
 	for i in 0..<vectorData.count {
 		vectorData[i] = particleUpdate(p: vectorData[i])
 	}
-	print(vectorData.count)
-	if vectorData.count == 437 {
-		break
-	}
-	tick += 1
+    if lastSize == vectorData.count {
+        tickNoChange += 1
+    }
+    else {
+        lastSize = vectorData.count
+        tickNoChange = 0
+    }
+    if tickNoChange > 1000 {
+        break
+    }
 }
 
 print("Particles remaining:" + String(vectorData.count))
+
