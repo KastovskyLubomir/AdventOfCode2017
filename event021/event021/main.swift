@@ -95,6 +95,7 @@
  */
 
 import Foundation
+import Darwin.ncurses
 
 func readLinesRemoveEmpty(str: String) -> Array<String> {
 	var x = str.components(separatedBy: ["\n"])
@@ -130,15 +131,6 @@ let data = fileManager.contents(atPath: filePath)
 let str: String = String(data: data!, encoding: String.Encoding.utf8)!
 
 let inputLines = readLinesRemoveEmpty(str: str)
-
-var rules = [String:String]()
-
-for line in inputLines {
-	let args = line.components(separatedBy:" => ")
-	rules[args[0]] = args[1]
-}
-
-let inputPattern = ".#./..#/###"
 
 func rotate(pattern: String) -> String {
 	if pattern.count <= 5 {
@@ -284,10 +276,17 @@ func replaceWithPatterns(inputPatterns: Array<String>, rules: Dictionary<String,
 	return arr
 }
 
+var rules = [String:String]()
+for line in inputLines {
+    let args = line.components(separatedBy:" => ")
+    rules[args[0]] = args[1]
+}
+let inputPattern = ".#./..#/###"
 var inputArr = [inputPattern]
 
 let start = DispatchTime.now() // <<<<<<<<<< Start time
-var N = 16
+var N = 18
+
 for i in 0..<N {
 	print("Iteration: " + String(i))
 	let matrixes = replaceWithPatterns(inputPatterns: inputArr, rules: rules)
@@ -299,11 +298,30 @@ for i in 0..<N {
         inputArr = getPatterns(matrix: matrix)
     }
 	//print("Result: " + inputArr.description)
-	//print("")
+    print("Matrix size: " + String(matrix.count))
+	print("")
 }
+
+
+/*
+let transformRules = prepareRules(inputLines: inputLines)
+let matchingRules = prepareMatchingRules(inputLines: inputLines)
+
+print(transformRules)
+print("")
+print(matchingRules)
+*/
 
 let end = DispatchTime.now()   // <<<<<<<<<<   end time
 let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
 let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
 print("Time to evaluate problem : \(timeInterval) seconds")
+
+
+
+
+
+
+
+
 
